@@ -11,3 +11,7 @@ workflows:
           record: true
           parallel: true
           parallelism: 10
+  test:
+    jobs:
+      - run:
+          command: "npm run test-headless"
