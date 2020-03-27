@@ -1,18 +1,45 @@
-version: 2.1
-# third party orbs
-orbs:
-  cypress: cypress-io/cypress@1.19.1
-workflows:
-  build:
-    jobs:
-      - cypress/install:
-          build: "npm run build"
-      - cypress/run:
-          record: true
-          parallel: true
-          parallelism: 10
-  test:
-    jobs:
-      - cypress/run:
-          test: "npm test"
+version: 2
 
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          TERM: xterm
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: "npm install"
+      - restore_cache:
+          key:
+            - dependency-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - dependency-cache-{{ .Branch }}
+            - dependency-cache
+      - run:
+          name: build
+          command: "npm build"
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache
+
+  test:
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: npm test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
