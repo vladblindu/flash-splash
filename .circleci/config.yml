@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/chakracore-10.13.0
+  node: circleci/node@1.1.6
 jobs:
   build-and-test:
     docker:
@@ -10,7 +10,7 @@ jobs:
           ## this enables colors in the output
           TERM: xterm
     executor:
-      name: node/default
+      name: node@10.13.0
     steps:
       - checkout
       - restore_cache:
@@ -21,14 +21,13 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn install
-            # what's wrong
             - save_cache:
-              key: v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-              paths:
-                - ~/.npm
-                - ~/.cache
+                key: v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                paths:
+                  - ~/.npm
+                  - ~/.cache
             - run: yarn run test-headless
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build-and-test:
+    jobs:
+      - build-and-test
