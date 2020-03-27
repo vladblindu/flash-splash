@@ -11,4 +11,8 @@ workflows:
           record: true
           parallel: true
           parallelism: 10
+  test:
+    jobs:
+      - cypress/run:
+          test: "npm test"
 
