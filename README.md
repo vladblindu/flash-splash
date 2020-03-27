@@ -42,9 +42,9 @@ The splashTime defaults to 1s and the cleanupTime to 200ms
 ###Tests
 Interactive with Cypress: 
 ```bash
- yarn test
+ npm run cy
 ```
 Continuous integration testing: 
 ```bash
- yarn run test-headless
+ npm test
 ```
