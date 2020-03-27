@@ -1,0 +1,24 @@
+{
+  "name": "flash-splash",
+  "version": "1.0.0",
+  "description": "splash screen utility",
+  "main": "index.js",
+  "scripts": {
+    "cy": "yarn run cypress open",
+    "build": "rollup -c",
+    "test-build": "rollup -c tests/__fixtures__/rollup-test.config.js",
+    "test": "yarn run test-build",
+    "test-headless": "yarn test && yarn run cypress run"
+  },
+  "author": "Vlad Blindu",
+  "license": "UNLICENCED",
+  "private": true,
+  "devDependencies": {
+    "rollup": "^2.1.0",
+    "@rollup/plugin-json": "^4.0.2",
+    "cypress": "^4.2.0"
+  },
+  "dependencies": {
+
+  }
+}
