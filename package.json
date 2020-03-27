@@ -4,11 +4,9 @@
   "description": "splash screen utility",
   "main": "index.js",
   "scripts": {
-    "cy": "yarn run cypress open",
-    "build": "rollup -c",
-    "test-build": "rollup -c tests/__fixtures__/rollup-test.config.js",
-    "test": "yarn run test-build",
-    "test-headless": "yarn test && yarn run cypress run"
+    "cy": "npm run cypress open",
+    "build": "rollup -c && rollup -c tests/__fixtures__/rollup-test.config.js",
+    "test": "cypress run"
   },
   "author": "Vlad Blindu",
   "license": "UNLICENCED",
