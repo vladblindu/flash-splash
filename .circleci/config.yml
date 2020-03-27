@@ -10,7 +10,7 @@ jobs:
           ## this enables colors in the output
           TERM: xterm
     executor:
-      name: node/default
+      name: node/chakracore
     steps:
       - checkout
       - restore_cache:
