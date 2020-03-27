@@ -12,10 +12,7 @@ jobs:
           name: install
           command: "npm install"
       - restore_cache:
-          key:
-            - dependency-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - dependency-cache-{{ .Branch }}
-            - dependency-cache
+          key: "dependency-cache-{{ .Branch }}-{{ checksum \"package-lock.json\" }}"
       - run:
           name: build
           command: "npm build"
