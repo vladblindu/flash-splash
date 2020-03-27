@@ -4,6 +4,8 @@
 FLASH-SPLASH
 ============
 
+[![vladblindu](https://circleci.com/gh/vladblindu/flash-splash.svg?style=shield)](https://circleci.com/gh/vladblindu/flash-splash)
+
 
 Utility that generates a splash screen that will be displayed until the "splashTime" expires, then fades out while the main "#root"
 element fades in. Useful in SPA's that have long load times. 
