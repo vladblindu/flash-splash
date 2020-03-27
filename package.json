@@ -1,5 +1,5 @@
 {
-  "name": "flash-splash",
+  "name": "@vladblindu/flash-splash",
   "version": "1.0.0",
   "description": "splash screen utility",
   "main": "index.js",
@@ -16,5 +16,6 @@
     "@rollup/plugin-json": "^4.0.2",
     "cypress": "^4.2.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": "https://github.com/vladblindu/flash-splash.git"
 }
