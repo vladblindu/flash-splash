@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  node: circleci/chakracore-10.13.0
 jobs:
   build-and-test:
     docker:
@@ -9,8 +7,6 @@ jobs:
         environment:
           ## this enables colors in the output
           TERM: xterm
-    executor:
-      name: node@10.13.0
     steps:
       - checkout
       - restore_cache:
