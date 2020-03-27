@@ -6,8 +6,8 @@ workflows:
   build:
     jobs:
       - cypress/install:
-           build: "yarn run build"
+          build: "npm run build"
       - cypress/run:
-           record: true
-           parallel: true
-           parallelism: 10
+          record: true
+          parallel: true
+          parallelism: 10

@@ -18,7 +18,5 @@
     "@rollup/plugin-json": "^4.0.2",
     "cypress": "^4.2.0"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
