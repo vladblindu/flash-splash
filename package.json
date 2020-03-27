@@ -10,7 +10,6 @@
   },
   "author": "Vlad Blindu",
   "license": "UNLICENCED",
-  "private": true,
   "devDependencies": {
     "rollup": "^2.1.0",
     "@rollup/plugin-json": "^4.0.2",
