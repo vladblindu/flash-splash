@@ -1,6 +1,6 @@
 {
   "name": "flash-splash",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "splash screen utility",
   "main": "index.js",
   "scripts": {

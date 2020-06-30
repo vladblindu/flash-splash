@@ -2,7 +2,7 @@ import json from '@rollup/plugin-json'
 //import multiInput from 'rollup-plugin-multi-input'
 
 export default {
-    input: 'index.js',
+    input: 'src/index.js',
     output: [
         {
             file: 'build/bundle.js',
