@@ -1,20 +1,30 @@
 {
   "name": "flash-splash",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "splash screen utility",
   "main": "index.js",
   "scripts": {
     "cy": "npm run cypress open",
     "build": "rollup -c && rollup -c tests/__fixtures__/rollup-test.config.js",
-    "test": "cypress run"
+    "test": "mocha -r esm tests/unit.specs.js && cypress run"
   },
   "author": "Vlad Blindu",
-  "license": "UNLICENCED",
+  "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "chai": "^4.2.0",
+    "cypress": "^4.2.0",
+    "esm": "^3.2.25",
+    "mocha": "^8.0.1",
     "rollup": "^2.1.0",
-    "@rollup/plugin-json": "^4.0.2",
-    "cypress": "^4.2.0"
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/core": "^7.10.4",
+    "deepmerge": "^4.2.2",
+    "jsdom": "^16.2.2",
+    "jsdom-global": "^3.0.2"
+  }
 }

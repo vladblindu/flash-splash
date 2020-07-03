@@ -1,117 +1,151 @@
 (function () {
     'use strict';
 
-    const FLASH_SPLASH = '__FLASH_SPLASH__';
-    const SPLASH_TIME = 1000;
-    const CLEANUP_TIME = 200;
+    /**
+     * @typedef {object} elem
+     * @param {string?} elem.cssText
+     * @param {string?} elem.innerHTML
+     * @param {string?} elem.img
+     */
 
-
-    const defaultSplashOpts = {
+    /**
+     * @typedef {object} opts
+     * @param {number} opts.minShowTime - defaults to 1000ms
+     * @param {number} opts.transitionTime - defaults to 500ms
+     * @param {elem} opts.splash
+     * @param {elem} opts.root
+     * @param {elem} opts.splashContent
+     */
+    const CLEANUP_DELAY = 200;
+    const MIN_SHOW_TIME = 1000;
+    const TRANSITION_TIME = 2000;
+    const DEFAULT_OPTS = {
+      minShowTime: MIN_SHOW_TIME,
+      cleanupDelay: CLEANUP_DELAY,
+      transitionTime: TRANSITION_TIME,
+      splash: {
         cssText: '',
-        innerHtml: ''
-    };
-
-    const defaultSplashContentOpts = {
+        innerHTML: ''
+      },
+      splashContent: {
         cssText: '',
-        innerHtml: '',
+        innerHTML: '',
         img: ''
-    };
-
-    const defaultRootOpts = {
+      },
+      root: {
         cssText: '',
-        innerHtml: ''
+        innerHTML: ''
+      }
     };
 
-
-    const baseElements = opts => {
-        // create a div element
-
-        // initialize or create the base html elements
-        const splash = document.getElementById('splash') || document.createElement('div');
-        const root = document.getElementById('root') || document.createElement('div');
-
-        splash.id = 'splash';
-        splash.innerHtml = opts.splash.innerHtml;
-        splash.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;' +
-            ';display:flex;justify-items:center;align-items:center;' +
-            'overflow:hidden;opacity:1;transition:opacity 1s;' + opts.splash.cssText;
-
-        const splashContent = document.createElement('div');
-        splashContent.style.cssText = 'background-repeat:no-repeat;background-position:center;background-size:cover;' +
-            'position:relative;margin:auto;' + opts.splashContent.cssText;
-        splashContent.style.backgroundImage = `url("${opts.splashContent.img}")`;
-
-        splash.appendChild(splashContent);
-
-        document.body.appendChild(splash);
-
-        root.id = 'root';
-        root.innerHtml = opts.root.innerHtml;
-        root.style.cssText = 'display: none; opacity: 0; transition: opacity 1s;' + opts.root.cssText;
-        document.body.appendChild(root);
-
-        return [splash, root]
+    const toCss = time => (time / 1000).toString() + 's';
+    const getTime = () => {
+      try {
+        return performance.now();
+      } catch {
+        return new Date();
+      }
     };
-
-    const hideSplash = splash => {
-        splash.style.opacity = '0';
-    };
-
-    const showRoot = root => {
-        root.style.display = 'block';
-        root.style.opacity = '1';
-        root.style.transform = 'none';
-    };
-
-    const cleanup = (win, splash, cleanupTime) => {
-        setTimeout(() => {
-            //splash.style.display = 'none'
-            splash.parentNode.removeChild(splash);
-            delete win[FLASH_SPLASH];
-        }, cleanupTime);
-    };
-
-    const flashSplash = (win, _opts) => {
-
-        const opts = {};
-        if (!_opts.splash) opts.splash = defaultSplashOpts;
-        else opts.splash = {...defaultSplashOpts, ..._opts.splash};
-
-        if (!_opts.splashContent) opts.splashContent = defaultSplashContentOpts;
-        else opts.splashContent = {...defaultSplashContentOpts, ..._opts.splashContent};
-
-        if (!_opts.root) opts.root = defaultRootOpts;
-        else opts.root = {...defaultRootOpts, ..._opts.root};
-
-
-        // wait for the isAuthenticated dispatch call to trigger the re-render
-        const [splash, root] = baseElements(opts);
-
-        setTimeout(() => {
-            // enable the app (display: block) with fade in
-            // and disable the splash screen with fade out
-            showRoot(root);
-            hideSplash(splash);
-            //wait for the fade animations to finish
-            // and remove both the splash element and __flashSplash variable
-            cleanup(win, splash, opts['cleanupTime'] || CLEANUP_TIME);
-        }, opts['splashTime'] || SPLASH_TIME);
-    };
-
-    var flashSplash$1 = (win, img) => {
-            win[FLASH_SPLASH] = flashSplash;
-            win[FLASH_SPLASH](win, img);
+    const mergeOpts = (opts, defaultOpts = DEFAULT_OPTS) => {
+      if (!opts || !Object.keys(opts).length) return defaultOpts;
+      return Object.keys(defaultOpts).reduce((acc, k) => {
+        if (typeof opts[k] !== 'object') acc[k] = opts[k] || defaultOpts[k];else acc[k] = { ...defaultOpts[k],
+          ...opts[k]
         };
-
-    var splashTime = 1000;
-    var cleanupTime = 200;
-
-    const splashContent = {
-        cssText: 'width:300px;height:300px',
-        innerHtml: '',
-        img: './test-image.jpg'
+        return acc;
+      }, {});
     };
 
-    flashSplash$1(window, {splashContent, splashTime, cleanupTime});
+    /**
+     * @class FlashSplash
+     */
+
+    class FlashSplash {
+      /**
+       * @constructor
+       * @param opts
+       */
+      constructor(opts = {}) {
+        const _opts = mergeOpts(opts);
+
+        this._transitionTime = _opts.transitionTime;
+        this._minShowTime = _opts.minShowTime;
+        this._cleanupDelay = _opts.cleanupDelay;
+        this._startTime = getTime(); // initialize or create the base html elements
+
+        this.splash = document.getElementById('splash') || document.createElement('div');
+        this.root = document.getElementById('root') || document.createElement('div'); // setup the splash element
+
+        this.splash.id = 'splash';
+        this.splash.innerHTML = _opts.splash.innerHTML;
+        this.splash.style.cssText = `position:absolute;top:0;left:0;width:vw;height:vh;display:flex;justify-items:center;align-items:center; overflow:hidden;opacity:1;transition:opacity ${toCss(this._transitionTime)};` + _opts.splash.cssText;
+        const splashContent = document.createElement('div');
+        splashContent.style.cssText = 'background-repeat:no-repeat;background-position:center;background-size:cover;position:relative;margin:auto;' + _opts.splashContent.cssText;
+        splashContent.style.backgroundImage = `url("${_opts.splashContent.img}")`;
+        this.splash.appendChild(splashContent);
+        document.body.appendChild(this.splash);
+        this.root.id = 'root';
+        this.root.innerHTML = _opts.root.innerHTML;
+        this.root.style.cssText = 'display: none; opacity: 0; transition: opacity ' + `${toCss(this._transitionTime)};` + _opts.root.cssText;
+        document.body.appendChild(this.root);
+      }
+
+      _hideSplash() {
+        this.splash.style.opacity = '0';
+      }
+
+      _showRoot() {
+        this.root.style.display = 'block';
+        this.root.style.opacity = '1';
+        this.root.style.transform = 'none';
+      }
+
+      _cleanup() {
+        setTimeout(() => {
+          //splash.style.display = 'none'
+          this.splash.parentNode.removeChild(this.splash);
+        }, this._transitionTime + this._cleanupDelay);
+      }
+
+      _onReady() {
+        this._showRoot();
+
+        this._hideSplash();
+
+        this._cleanup();
+      }
+
+      ready() {
+        const timeElapsed = getTime() - this._startTime;
+
+        if (timeElapsed > this._minShowTime) this._onReady();else setTimeout(this._onReady, this._minShowTime - timeElapsed);
+      }
+
+    }
+
+    var getFlashSplash = (opts => {
+      const flashSplash = new FlashSplash(opts);
+      Object.freeze(flashSplash);
+      return flashSplash;
+    });
+
+    const flashSplash = getFlashSplash({
+      splashContent: {
+        cssText: 'width:300px;height:300px',
+        innerHTML: '',
+        img: './test-image.jpg'
+      },
+      root: {
+        innerHTML: '<div style="color: white; font-size: 30px; padding:20px; background-color: red;">ROOT</div>'
+      }
+    });
+    const btn = document.createElement('button');
+    const splash = document.getElementById('splash');
+    btn.id = 'btn';
+    btn.innerText = 'READY';
+    btn.addEventListener('click', () => {
+      flashSplash.ready();
+    });
+    splash.appendChild(btn);
 
 }());

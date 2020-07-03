@@ -1,4 +1,6 @@
-import json from '@rollup/plugin-json'
+import commonjs from 'rollup-plugin-commonjs'
+import nodeResolve from '@rollup/plugin-node-resolve'
+import babel from "rollup-plugin-babel"
 
 export default {
     input: 'tests/__fixtures__/test-setup.js',
@@ -8,5 +10,5 @@ export default {
             format: 'iife'
         }
     ],
-    plugins: [json()]
+    plugins: [commonjs(), nodeResolve(), babel()]
 }

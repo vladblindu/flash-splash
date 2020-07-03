@@ -1,10 +1,24 @@
-import flashSplash from '../../index'
-import {splashTime, cleanupTime} from './test-config.json'
+import getFlashSplash from '../../src/index'
 
-const splashContent = {
-    cssText: 'width:300px;height:300px',
-    innerHtml: '',
-    img: './test-image.jpg'
-}
+const flashSplash = getFlashSplash({
+    splashContent: {
+        cssText: 'width:300px;height:300px',
+        innerHTML: '',
+        img: './test-image.jpg'
+    },
+    root: {
+        innerHTML: '<div style="color: white; font-size: 30px; padding:20px; background-color: red;">ROOT</div>'
+    }
+})
 
-flashSplash(window, {splashContent, splashTime, cleanupTime})
+const btn = document.createElement('button')
+const splash = document.getElementById('splash')
+
+btn.id = 'btn'
+btn.innerText = 'READY'
+
+btn.addEventListener('click', () => {
+    flashSplash.ready()
+})
+
+splash.appendChild(btn)

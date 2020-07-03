@@ -1,5 +1,5 @@
 {
   "integrationFolder": "tests",
-  "testFiles": "*.specs.js",
+  "testFiles": "e2e.specs.js",
   "defaultCommandTimeout": 100
 }

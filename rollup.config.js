@@ -1,5 +1,4 @@
-import json from '@rollup/plugin-json'
-//import multiInput from 'rollup-plugin-multi-input'
+import nodeResolve from '@rollup/plugin-node-resolve'
 
 export default {
     input: 'src/index.js',
@@ -9,5 +8,7 @@ export default {
             format: 'cjs'
         }
     ],
-    plugins: [json()]
+    plugins: [nodeResolve({
+        jsnext: true
+    })]
 }
