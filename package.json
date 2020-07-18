@@ -2,7 +2,7 @@
   "name": "@vladblindu/flash-splash",
   "version": "1.0.3",
   "description": "splash screen utility",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "cy": "npm run cypress open",
     "build": "rollup -c && rollup -c tests/__fixtures__/rollup-test.config.js",
