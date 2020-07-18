@@ -1,4 +1,4 @@
-const {toCss, getTime, mergeOpts} = require('./helpers')
+import {toCss, getTime, mergeOpts} from'./helpers'
 
 /**
  * @class FlashSplash
@@ -39,7 +39,9 @@ class FlashSplash {
         this.root.innerHTML = _opts.root.innerHTML
         this.root.style.cssText = 'display: none; opacity: 0; transition: opacity ' +
             `${toCss(this._transitionTime)};` + _opts.root.cssText
-        document.body.appendChild(this.root)
+
+        if(!hasRoot)
+            document.body.appendChild(this.root)
 
         this.ready = this.ready.bind(this)
         this._onReady = this._onReady.bind(this)
@@ -75,4 +77,4 @@ class FlashSplash {
     }
 }
 
-module.exports = FlashSplash
+export default FlashSplash
