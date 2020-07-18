@@ -20,7 +20,9 @@ class FlashSplash {
 
         // initialize or create the base html elements
         this.splash = document.getElementById('splash') || document.createElement('div')
-        this.root = document.getElementById('root') || document.createElement('div')
+        const hasRoot = document.getElementById('root')
+        if(!hasRoot) this.root = document.createElement('div')
+        else this.root = hasRoot
 
         // setup the splash element
         this.splash.id = 'splash'
@@ -28,14 +30,18 @@ class FlashSplash {
         this.splash.style.cssText = `position:absolute;top:0;left:0;width:vw;height:vh;display:flex;justify-items:center;align-items:center; overflow:hidden;opacity:1;transition:opacity ${toCss(this._transitionTime)};` + _opts.splash.cssText
 
         const splashContent = document.createElement('div')
-        splashContent.style.cssText = 'background-repeat:no-repeat;background-position:center;background-size:cover;position:relative;margin:auto;' + _opts.splashContent.cssText
-        splashContent.style.backgroundImage = `url("${_opts.splashContent.img}")`
+        splashContent.style.cssText = 'position:relative;margin:auto;' + _opts.splashContent.cssText
+
+        if(_opts.splashContent.img){
+            splashContent.style.cssText += 'background-repeat:no-repeat;background-position:center;background-size:cover;'
+            splashContent.style.backgroundImage = `url("${_opts.splashContent.img}")`
+        }
 
         this.splash.appendChild(splashContent)
 
         document.body.appendChild(this.splash)
 
-        this.root.id = 'root'
+        if(!this.root.id) this.root.id = 'root'
         this.root.innerHTML = _opts.root.innerHTML
         this.root.style.cssText = 'display: none; opacity: 0; transition: opacity ' +
             `${toCss(this._transitionTime)};` + _opts.root.cssText
