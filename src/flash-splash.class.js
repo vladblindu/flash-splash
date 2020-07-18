@@ -1,4 +1,4 @@
-import {toCss, getTime, mergeOpts} from'./helpers'
+const {toCss, getTime, mergeOpts} = require('./helpers')
 
 /**
  * @class FlashSplash
@@ -74,4 +74,4 @@ class FlashSplash {
     }
 }
 
-export default FlashSplash
+module.exports = FlashSplash

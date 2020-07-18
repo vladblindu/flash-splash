@@ -1,4 +1,4 @@
-import {DEFAULT_OPTS} from './constants'
+const {DEFAULT_OPTS} = require('./constants')
 
 export const toCss = time => (time / 1000).toString() + 's'
 

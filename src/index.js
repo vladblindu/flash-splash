@@ -1,6 +1,6 @@
-import FlashSplash from './flash-splash.class'
+const FlashSplash =require('./flash-splash.class')
 
-export default opts => {
+module.exports = opts => {
     const flashSplash = new FlashSplash(opts)
     Object.freeze(flashSplash)
     return flashSplash

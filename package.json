@@ -1,9 +1,8 @@
 {
   "name": "@vladblindu/flash-splash",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "splash screen utility",
-  "main": "dist/index.umd.js",
-  "source": "src/index",
+  "main": "src/index",
   "scripts": {
     "cy": "npm run cypress open",
     "build": "webpack",
