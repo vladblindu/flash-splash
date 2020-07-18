@@ -88,6 +88,7 @@
         this.root.innerHTML = _opts.root.innerHTML;
         this.root.style.cssText = 'display: none; opacity: 0; transition: opacity ' + `${toCss(this._transitionTime)};` + _opts.root.cssText;
         document.body.appendChild(this.root);
+        this.ready = this.ready.bind(this);
       }
 
       _hideSplash() {
