@@ -1,8 +1,8 @@
 const {DEFAULT_OPTS} = require('./constants')
 
-export const toCss = time => (time / 1000).toString() + 's'
+module.exports.toCss = time => (time / 1000).toString() + 's'
 
-export const getTime = () => {
+module.exports.getTime = () => {
     try {
         return performance.now()
     } catch {
@@ -10,7 +10,7 @@ export const getTime = () => {
     }
 }
 
-export const mergeOpts = (opts, defaultOpts = DEFAULT_OPTS) => {
+module.exports.mergeOpts = (opts, defaultOpts = DEFAULT_OPTS) => {
     if (!opts || !Object.keys(opts).length)
         return defaultOpts
     return Object.keys(defaultOpts).reduce(

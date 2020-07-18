@@ -14,9 +14,15 @@
  * @param {elem} opts.splashContent
  */
 
-module.exports.CLEANUP_DELAY = 200
-module.exports.MIN_SHOW_TIME = 1000
-module.exports.TRANSITION_TIME = 2000
+
+const CLEANUP_DELAY = 200
+const MIN_SHOW_TIME = 1000
+const TRANSITION_TIME = 2000
+
+module.exports.CLEANUP_DELAY = CLEANUP_DELAY
+module.exports.MIN_SHOW_TIME = MIN_SHOW_TIME
+module.exports.TRANSITION_TIME = TRANSITION_TIME
+
 module.exports.DEFAULT_OPTS = {
     minShowTime: MIN_SHOW_TIME,
     cleanupDelay: CLEANUP_DELAY,
