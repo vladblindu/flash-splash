@@ -42,6 +42,7 @@ class FlashSplash {
         document.body.appendChild(this.root)
 
         this.ready = this.ready.bind(this)
+        this._onReady = this._onReady.bind(this)
     }
 
     _hideSplash() {
