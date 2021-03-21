@@ -3,6 +3,7 @@
  * @param {string?} elem.cssText
  * @param {string?} elem.innerHTML
  * @param {string?} elem.img
+ * @param {string?} elem.id
  */
 
 /**

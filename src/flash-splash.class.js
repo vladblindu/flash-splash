@@ -14,13 +14,14 @@ class FlashSplash {
 
         const _opts = mergeOpts(opts)
         this._transitionTime = _opts.transitionTime
-        this._minShowTime = _opts.minShowTime 
+        this._minShowTime = _opts.minShowTime
         this._cleanupDelay = _opts.cleanupDelay
         this._startTime = getTime()
 
+
         // initialize or create the base html elements
         this.splash = document.getElementById('splash') || document.createElement('div')
-        const hasRoot = document.getElementById('root')
+        const hasRoot = document.getElementById(_opts.root.id || 'root')
         if(!hasRoot) this.root = document.createElement('div')
         else this.root = hasRoot
 
